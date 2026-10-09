@@ -1,0 +1,7 @@
+.gradle/
+build/
+remappedSrc/
+run/
+logs/
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
