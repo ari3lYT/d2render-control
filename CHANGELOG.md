@@ -1,4 +1,11 @@
+**English** · [Русский](CHANGELOG.ru.md)
+
 # Changelog
+
+## Unreleased
+
+- Full Russian README, configuration, architecture, developer and contributor guides.
+- RU / EN navigation and Russian documentation covers.
 
 ## 0.1.2 — 2026-11-04
 

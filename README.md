@@ -1,3 +1,5 @@
+**English** · [Русский](README.ru.md)
+
 ![D2 Render Control](docs/assets/cover.svg)
 
 # D2 Render Control
@@ -7,7 +9,7 @@ A server-side Fabric command bridge that writes bounded render requests to a fil
 [![CI](https://github.com/ari3lYT/d2render-control/actions/workflows/ci.yml/badge.svg)](https://github.com/ari3lYT/d2render-control/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-87bfa3)](LICENSE)
 
-[Quick start](#quick-start) · [Architecture](docs/architecture.md) · [Development](docs/development.md) · [Русский](docs/README.ru.md)
+[Quick start](#quick-start) · [Architecture](docs/architecture.md) · [Development](docs/development.md)
 
 
 ## See it

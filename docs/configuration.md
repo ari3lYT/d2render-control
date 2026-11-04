@@ -1,3 +1,5 @@
+**English** · [Русский](configuration.ru.md)
+
 # Configuration
 
 The JVM system property `d2render.queue` selects the queue root. Default: `config/d2gate/render-queue`.
