@@ -23,14 +23,14 @@ public final class RenderControl implements ModInitializer {
     private static final ScheduledExecutorService IO=Executors.newSingleThreadScheduledExecutor(r -> {
         Thread thread=new Thread(r,"d2render-control");thread.setDaemon(true);return thread;
     });
-    private static volatile String cachedStatus="Очередь рендера: загружаю состояние рабочего процесса NAS…";
+    private static volatile String cachedStatus="Очередь рендера: загружаю состояние рабочего процесса…";
     private static final Deque<String> notices=new ArrayDeque<>();
-    private static final String HELP="Рендер Main: /render here | area x1 z1 x2 z2 [y] | camera x y z tx ty tz | video x1 y1 z1 x2 y2 z2 tx ty tz seconds | status | cancel ID. Область до 192×192, видео 2–8 сек.";
+    private static final String HELP="Рендер: /render here | area x1 z1 x2 z2 [y] | camera x y z tx ty tz | video x1 y1 z1 x2 y2 z2 tx ty tz seconds | status | cancel ID. Область до 192×192, видео 2–8 сек.";
 
     @Override public void onInitialize() {
         IO.scheduleWithFixedDelay(() -> {
             try {cachedStatus=status()+(notices.isEmpty()?"":"\nПоследние запросы:\n"+String.join("\n",notices));}
-            catch(Exception error) {cachedStatus="Не удалось прочитать очередь рендера NAS.";}
+            catch(Exception error) {cachedStatus="Не удалось прочитать очередь рендера.";}
         },0,2,TimeUnit.SECONDS);
         CommandRegistrationCallback.EVENT.register((dispatcher,access,environment) -> {
             var root=Commands.literal("render").requires(RenderControl::allowed)
@@ -68,7 +68,7 @@ public final class RenderControl implements ModInitializer {
         if(action.equals("status"))return reply(source,cachedStatus);
         if(!action.equals("status") && !action.equals("cancel") && source.isPlayer()
                 && !source.getLevel().dimension().equals(Level.OVERWORLD)) {
-            return reply(source,"Рендер пока доступен только для обычного мира Main.");
+            return reply(source,"Рендер пока доступен только для обычного мира.");
         }
         final JsonObject request;
         try { request=List.of("status","cancel").contains(action)?null:parse(action,parameters); }
@@ -99,10 +99,10 @@ public final class RenderControl implements ModInitializer {
                     Path temp=ROOT.resolve("inbox").resolve(id+".pending");
                     Files.writeString(temp,request.toString(),StandardOpenOption.CREATE_NEW);
                     Files.move(temp,ROOT.resolve("inbox").resolve(id+".json"),StandardCopyOption.ATOMIC_MOVE);
-                    result="В очереди: "+id+". Незавершённых заданий перед ним: "+ahead+". /render status — прогресс. Результат придёт в закрытый канал рендеров.";
+                    result="В очереди: "+id+". Незавершённых заданий перед ним: "+ahead+". /render status — прогресс. Результат и состояние задания — /render status.";
                 }
             } catch(Exception error) {
-                result=requestId+": "+(error instanceof IllegalArgumentException?error.getMessage():"Не удалось обратиться к очереди рендера. Проверь рабочий процесс NAS.");
+                result=requestId+": "+(error instanceof IllegalArgumentException?error.getMessage():"Не удалось обратиться к очереди рендера. Проверь внешний рабочий процесс.");
             }
             String message=result;
             notices.addLast(message);
@@ -173,7 +173,7 @@ public final class RenderControl implements ModInitializer {
         catch(Exception error) {return Long.MAX_VALUE;}
     }
     private static String status() throws Exception {
-        StringBuilder text=new StringBuilder("Очередь рендера Main");
+        StringBuilder text=new StringBuilder("Очередь рендера");
         Path status=ROOT.resolve("status.json");
         if(Files.exists(status)) {
             JsonObject data=read(status);
