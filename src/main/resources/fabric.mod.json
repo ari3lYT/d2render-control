@@ -1,9 +1,24 @@
 {
   "schemaVersion": 1,
   "id": "d2render_control",
-  "version": "0.1.1",
+  "version": "${version}",
   "name": "D2 Render Control",
   "environment": "server",
-  "entrypoints": {"main": ["ru.d2omg.render.RenderControl"]},
-  "depends": {"fabricloader": ">=0.19.5", "minecraft": "26.3", "java": ">=25", "fabric-command-api-v2": "*"}
+  "entrypoints": {
+    "main": [
+      "ru.d2omg.render.RenderControl"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "26.3",
+    "java": ">=25",
+    "fabric-command-api-v2": "*"
+  },
+  "license": "MIT",
+  "contact": {
+    "sources": "https://github.com/ari3lYT/d2render-control",
+    "issues": "https://github.com/ari3lYT/d2render-control/issues"
+  },
+  "description": "Bounded render request queue for an external worker."
 }

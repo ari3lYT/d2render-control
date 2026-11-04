@@ -19,7 +19,7 @@ import java.util.concurrent.*;
 
 /** Only serializes bounded render requests; never runs a shell or renderer in Minecraft. */
 public final class RenderControl implements ModInitializer {
-    static final Path ROOT=Path.of("config/d2gate/render-queue");
+    static final Path ROOT=Path.of(System.getProperty("d2render.queue", "config/d2gate/render-queue"));
     private static final ScheduledExecutorService IO=Executors.newSingleThreadScheduledExecutor(r -> {
         Thread thread=new Thread(r,"d2render-control");thread.setDaemon(true);return thread;
     });
@@ -113,6 +113,7 @@ public final class RenderControl implements ModInitializer {
     }
 
     static JsonObject parse(String kind,String parameters) {
+        if(!List.of("area", "camera", "video").contains(kind))throw new IllegalArgumentException("Unknown render request kind.");
         String[] values=parameters.trim().split("\\s+");
         int count=kind.equals("area")?4:kind.equals("camera")?6:10;
         if(values.length!=count && !(kind.equals("area") && values.length==5))throw new IllegalArgumentException(HELP);

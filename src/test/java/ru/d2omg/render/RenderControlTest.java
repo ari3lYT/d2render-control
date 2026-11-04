@@ -10,6 +10,9 @@ import net.minecraft.world.phys.Vec3;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RenderControlTest {
+    @Test void rejectsUnknownRequestKinds() {
+        assertThrows(IllegalArgumentException.class, () -> RenderControl.parse("shell", "0 0 0 0 0 0 0 0 0 2"));
+    }
     @Test void consoleRequiresOwnerPermissions() {
         for(var permissions:new LevelBasedPermissionSet[]{
                 LevelBasedPermissionSet.ALL,

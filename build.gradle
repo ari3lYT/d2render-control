@@ -20,3 +20,10 @@ dependencies {
 java { toolchain.languageVersion = JavaLanguageVersion.of(25) }
 tasks.withType(JavaCompile).configureEach { options.release = 25; options.encoding = 'UTF-8' }
 tasks.named('test') { useJUnitPlatform() }
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') { expand version: project.version }
+}
+java { withSourcesJar() }
+jar { from('LICENSE') }
